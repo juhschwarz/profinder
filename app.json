@@ -1,7 +1,8 @@
+
 {
   "expo": {
     "name": "ProFinder",
-    "slug": "ProFinder",
+    "slug": "profinder",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -14,10 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Natively",
+      "bundleIdentifier": "com.profinder.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +27,12 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively"
+      "package": "com.profinder.app",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -34,15 +41,20 @@
     "plugins": [
       "expo-font",
       "expo-router",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-localization"
     ],
-    "scheme": "natively",
+    "scheme": "profinder",
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {}
-    }
-  },
-  "scheme": "ProFinder"
+      "router": {},
+      "eas": {
+        "projectId": "seu-project-id-aqui"
+      }
+    },
+    "description": "Find and offer professional services with ProFinder - Connect with verified professionals",
+    "privacy": "public"
+  }
 }
