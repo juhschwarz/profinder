@@ -34,21 +34,22 @@ export const serviceCategories: ServiceCategory[] = [
   { id: '12', name: 'Other', icon: 'more-horiz', count: 0 },
 ];
 
-// Empty services array - no example data
+// Empty services array - ready for user registrations
 export const mockServices: Service[] = [];
 
+// Empty current user - ready for authentication
 export const currentUser: UserProfile = {
-  id: '1',
-  name: 'Maria Silva',
-  email: 'maria.silva@email.com',
-  phone: '+41 79 123 4567',
-  location: 'Zurich, Switzerland',
-  verified: true,
-  premium: true,
-  premiumExpiryDate: '2025-12-31',
-  bio: 'Professional cleaner with 10 years of experience. Dedicated to leaving your home spotless!',
-  skills: ['Residential Cleaning', 'Commercial Cleaning', 'Organization'],
-  rating: 4.8,
-  reviewCount: 127,
+  id: '',
+  name: '',
+  email: '',
+  phone: '',
+  location: '',
+  verified: false,
+  premium: false,
+  premiumExpiryDate: '',
+  bio: '',
+  skills: [],
+  rating: 0,
+  reviewCount: 0,
   servicesOffered: [],
 };
