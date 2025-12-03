@@ -4,13 +4,15 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { IconSymbol } from './IconSymbol';
 import { colors } from '@/styles/commonStyles';
 import { Service } from '@/types/service';
+import { i18n } from '@/locales/translations';
 
 interface ServiceCardProps {
   service: Service;
   onPress: () => void;
+  onBook?: () => void;
 }
 
-export function ServiceCard({ service, onPress }: ServiceCardProps) {
+export function ServiceCard({ service, onPress, onBook }: ServiceCardProps) {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
       {service.imageUrl && (
@@ -87,6 +89,25 @@ export function ServiceCard({ service, onPress }: ServiceCardProps) {
             {service.price} {service.currency}
           </Text>
         </View>
+
+        {onBook && (
+          <TouchableOpacity
+            style={styles.bookButton}
+            onPress={(e) => {
+              e.stopPropagation();
+              onBook();
+            }}
+            activeOpacity={0.7}
+          >
+            <IconSymbol
+              ios_icon_name="calendar"
+              android_material_icon_name="calendar-today"
+              size={18}
+              color={colors.card}
+            />
+            <Text style={styles.bookButtonText}>{i18n.t('serviceCard.bookNow')}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -188,5 +209,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: colors.primary,
+  },
+  bookButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.primary,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  bookButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.card,
   },
 });

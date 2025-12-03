@@ -1,24 +1,41 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from '@/components/SearchBar';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ServiceCard } from '@/components/ServiceCard';
+import { BookingModal } from '@/components/BookingModal';
 import { colors } from '@/styles/commonStyles';
 import { getServiceCategories, mockServices } from '@/data/mockData';
 import { IconSymbol } from '@/components/IconSymbol';
 import { i18n } from '@/locales/translations';
+import { Service } from '@/types/service';
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categories, setCategories] = useState(getServiceCategories());
+  const [bookingModalVisible, setBookingModalVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   // Update categories when language changes
   useEffect(() => {
     setCategories(getServiceCategories());
   }, []);
+
+  const handleBookService = (service: Service) => {
+    setSelectedService(service);
+    setBookingModalVisible(true);
+  };
+
+  const handleConfirmBooking = (bookingData: { date: Date; time: Date; notes: string }) => {
+    console.log('Booking confirmed:', { service: selectedService, ...bookingData });
+    Alert.alert(
+      i18n.t('booking.successTitle'),
+      i18n.t('booking.successMessage')
+    );
+  };
 
   const filteredServices = mockServices.filter(service => {
     const matchesSearch = searchQuery === '' ||
@@ -113,6 +130,7 @@ export default function SearchScreen() {
                   <ServiceCard
                     service={service}
                     onPress={() => console.log('Service pressed:', service.title)}
+                    onBook={() => handleBookService(service)}
                   />
                 </React.Fragment>
               ))
@@ -132,6 +150,13 @@ export default function SearchScreen() {
             )}
           </View>
         </ScrollView>
+
+        <BookingModal
+          visible={bookingModalVisible}
+          service={selectedService}
+          onClose={() => setBookingModalVisible(false)}
+          onConfirm={handleConfirmBooking}
+        />
       </View>
     </SafeAreaView>
   );

@@ -6,8 +6,10 @@ import { IconSymbol } from '@/components/IconSymbol';
 import { colors } from '@/styles/commonStyles';
 import { currentUser } from '@/data/mockData';
 import { i18n } from '@/locales/translations';
+import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
+  const router = useRouter();
   const daysUntilExpiry = currentUser.premiumExpiryDate
     ? Math.ceil((new Date(currentUser.premiumExpiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
     : 0;
@@ -255,6 +257,27 @@ export default function ProfileScreen() {
                 color={colors.primary}
               />
               <Text style={styles.menuItemText}>{i18n.t('profile.myReviews')}</Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => router.push('/privacy-settings')}
+          >
+            <View style={styles.menuItemLeft}>
+              <IconSymbol
+                ios_icon_name="lock.shield.fill"
+                android_material_icon_name="security"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuItemText}>{i18n.t('profile.privacySecurity')}</Text>
             </View>
             <IconSymbol
               ios_icon_name="chevron.right"
