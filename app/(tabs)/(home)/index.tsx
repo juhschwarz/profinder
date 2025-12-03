@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Logo } from '@/components/Logo';
 import { SearchBar } from '@/components/SearchBar';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ServiceCard } from '@/components/ServiceCard';
 import { BookingModal } from '@/components/BookingModal';
+import { IconSymbol } from '@/components/IconSymbol';
 import { colors } from '@/styles/commonStyles';
 import { getServiceCategories, mockServices } from '@/data/mockData';
 import { useRouter } from 'expo-router';
@@ -32,10 +33,6 @@ export default function HomeScreen() {
 
   const handleConfirmBooking = (bookingData: { date: Date; time: Date; notes: string }) => {
     console.log('Booking confirmed:', { service: selectedService, ...bookingData });
-    Alert.alert(
-      i18n.t('booking.successTitle'),
-      i18n.t('booking.successMessage')
-    );
   };
 
   const filteredServices = mockServices.filter(service =>
@@ -96,7 +93,7 @@ export default function HomeScreen() {
             <Text style={styles.sectionTitle}>
               {searchQuery ? i18n.t('home.searchResults') : i18n.t('home.featuredServices')}
             </Text>
-            {!searchQuery && (
+            {!searchQuery && sortedServices.length > 0 && (
               <TouchableOpacity>
                 <Text style={styles.seeAll}>{i18n.t('home.seeAll')}</Text>
               </TouchableOpacity>
@@ -115,9 +112,40 @@ export default function HomeScreen() {
             ))
           ) : (
             <View style={styles.emptyState}>
-              <Text style={styles.emptyText}>
-                {i18n.t('home.noResults', { query: searchQuery })}
+              <View style={styles.emptyIconContainer}>
+                <IconSymbol
+                  ios_icon_name="magnifyingglass"
+                  android_material_icon_name="search"
+                  size={64}
+                  color={colors.textSecondary}
+                />
+              </View>
+              <Text style={styles.emptyTitle}>
+                {searchQuery ? i18n.t('home.noResults', { query: searchQuery }) : i18n.t('home.noServicesYet')}
               </Text>
+              <Text style={styles.emptyDescription}>
+                {searchQuery 
+                  ? i18n.t('home.tryDifferentSearch')
+                  : i18n.t('home.beFirstToOffer')
+                }
+              </Text>
+              {!searchQuery && (
+                <TouchableOpacity 
+                  style={styles.addServiceButton}
+                  onPress={() => router.push('/(tabs)/add')}
+                  activeOpacity={0.7}
+                >
+                  <IconSymbol
+                    ios_icon_name="plus.circle.fill"
+                    android_material_icon_name="add-circle"
+                    size={20}
+                    color={colors.card}
+                  />
+                  <Text style={styles.addServiceButtonText}>
+                    {i18n.t('home.addService')}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
         </View>
@@ -180,10 +208,39 @@ const styles = StyleSheet.create({
   emptyState: {
     padding: 40,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  emptyText: {
-    fontSize: 16,
+  emptyIconContainer: {
+    marginBottom: 16,
+    opacity: 0.5,
+  },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  emptyDescription: {
+    fontSize: 14,
     color: colors.textSecondary,
     textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  addServiceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 24,
+  },
+  addServiceButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.card,
   },
 });

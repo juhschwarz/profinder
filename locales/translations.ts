@@ -26,6 +26,10 @@ const translations = {
       searchResults: 'Search Results',
       seeAll: 'See all',
       noResults: 'No services found for "{{query}}"',
+      noServicesYet: 'No services available yet',
+      tryDifferentSearch: 'Try a different search term',
+      beFirstToOffer: 'Be the first to offer a service to the community',
+      addService: 'Add Service',
       services: 'services',
     },
     // Search Screen
@@ -223,21 +227,6 @@ const translations = {
     },
   },
   pt: {
-    // Booking Modal
-    booking: {
-      title: 'Reservar Serviço',
-      selectDate: 'Selecionar Data',
-      selectTime: 'Selecionar Horário',
-      notes: 'Notas Adicionais (Opcional)',
-      notesPlaceholder: 'Requisitos especiais ou instruções...',
-      infoText: 'Sua solicitação de reserva será enviada ao prestador de serviço. Eles confirmarão o agendamento em até 24 horas.',
-      cancel: 'Cancelar',
-      confirm: 'Confirmar Reserva',
-      errorTitle: 'Erro',
-      errorMessage: 'Por favor, selecione uma data e horário para sua reserva.',
-      successTitle: 'Reserva Solicitada',
-      successMessage: 'Sua solicitação de reserva foi enviada. O prestador confirmará em breve.',
-    },
     // Tab Bar
     tabs: {
       home: 'Início',
@@ -259,6 +248,10 @@ const translations = {
       searchResults: 'Resultados da Busca',
       seeAll: 'Ver todos',
       noResults: 'Nenhum serviço encontrado para "{{query}}"',
+      noServicesYet: 'Nenhum serviço disponível ainda',
+      tryDifferentSearch: 'Tente um termo de busca diferente',
+      beFirstToOffer: 'Seja o primeiro a oferecer um serviço para a comunidade',
+      addService: 'Adicionar Serviço',
       services: 'serviços',
     },
     // Search Screen
@@ -342,18 +335,18 @@ const translations = {
     },
     // Booking Modal
     booking: {
-      title: 'Book Service',
-      selectDate: 'Select Date',
-      selectTime: 'Select Time',
-      notes: 'Additional Notes (Optional)',
-      notesPlaceholder: 'Any special requirements or instructions...',
-      infoText: 'Your booking request will be sent to the service provider. They will confirm the appointment within 24 hours.',
-      cancel: 'Cancel',
-      confirm: 'Confirm Booking',
-      errorTitle: 'Error',
-      errorMessage: 'Please select a date and time for your booking.',
-      successTitle: 'Booking Requested',
-      successMessage: 'Your booking request has been sent. The provider will confirm shortly.',
+      title: 'Reservar Serviço',
+      selectDate: 'Selecionar Data',
+      selectTime: 'Selecionar Horário',
+      notes: 'Notas Adicionais (Opcional)',
+      notesPlaceholder: 'Requisitos especiais ou instruções...',
+      infoText: 'Sua solicitação de reserva será enviada ao prestador de serviço. Eles confirmarão o agendamento em até 24 horas.',
+      cancel: 'Cancelar',
+      confirm: 'Confirmar Reserva',
+      errorTitle: 'Erro',
+      errorMessage: 'Por favor, selecione uma data e horário para sua reserva.',
+      successTitle: 'Reserva Solicitada',
+      successMessage: 'Sua solicitação de reserva foi enviada. O prestador confirmará em breve.',
     },
     // Bookings Screen
     bookings: {
@@ -456,21 +449,6 @@ const translations = {
     },
   },
   de: {
-    // Booking Modal
-    booking: {
-      title: 'Service buchen',
-      selectDate: 'Datum wählen',
-      selectTime: 'Uhrzeit wählen',
-      notes: 'Zusätzliche Notizen (Optional)',
-      notesPlaceholder: 'Besondere Anforderungen oder Anweisungen...',
-      infoText: 'Ihre Buchungsanfrage wird an den Dienstleister gesendet. Sie werden den Termin innerhalb von 24 Stunden bestätigen.',
-      cancel: 'Abbrechen',
-      confirm: 'Buchung bestätigen',
-      errorTitle: 'Fehler',
-      errorMessage: 'Bitte wählen Sie ein Datum und eine Uhrzeit für Ihre Buchung.',
-      successTitle: 'Buchung angefragt',
-      successMessage: 'Ihre Buchungsanfrage wurde gesendet. Der Anbieter wird in Kürze bestätigen.',
-    },
     // Tab Bar
     tabs: {
       home: 'Startseite',
@@ -492,6 +470,10 @@ const translations = {
       searchResults: 'Suchergebnisse',
       seeAll: 'Alle anzeigen',
       noResults: 'Keine Dienstleistungen gefunden für "{{query}}"',
+      noServicesYet: 'Noch keine Dienstleistungen verfügbar',
+      tryDifferentSearch: 'Versuchen Sie einen anderen Suchbegriff',
+      beFirstToOffer: 'Seien Sie der Erste, der der Community eine Dienstleistung anbietet',
+      addService: 'Dienstleistung hinzufügen',
       services: 'Dienstleistungen',
     },
     // Search Screen
@@ -575,18 +557,18 @@ const translations = {
     },
     // Booking Modal
     booking: {
-      title: 'Book Service',
-      selectDate: 'Select Date',
-      selectTime: 'Select Time',
-      notes: 'Additional Notes (Optional)',
-      notesPlaceholder: 'Any special requirements or instructions...',
-      infoText: 'Your booking request will be sent to the service provider. They will confirm the appointment within 24 hours.',
-      cancel: 'Cancel',
-      confirm: 'Confirm Booking',
-      errorTitle: 'Error',
-      errorMessage: 'Please select a date and time for your booking.',
-      successTitle: 'Booking Requested',
-      successMessage: 'Your booking request has been sent. The provider will confirm shortly.',
+      title: 'Service buchen',
+      selectDate: 'Datum wählen',
+      selectTime: 'Uhrzeit wählen',
+      notes: 'Zusätzliche Notizen (Optional)',
+      notesPlaceholder: 'Besondere Anforderungen oder Anweisungen...',
+      infoText: 'Ihre Buchungsanfrage wird an den Dienstleister gesendet. Sie werden den Termin innerhalb von 24 Stunden bestätigen.',
+      cancel: 'Abbrechen',
+      confirm: 'Buchung bestätigen',
+      errorTitle: 'Fehler',
+      errorMessage: 'Bitte wählen Sie ein Datum und eine Uhrzeit für Ihre Buchung.',
+      successTitle: 'Buchung angefragt',
+      successMessage: 'Ihre Buchungsanfrage wurde gesendet. Der Anbieter wird in Kürze bestätigen.',
     },
     // Bookings Screen
     bookings: {
@@ -689,21 +671,6 @@ const translations = {
     },
   },
   fr: {
-    // Booking Modal
-    booking: {
-      title: 'Réserver le Service',
-      selectDate: 'Sélectionner la Date',
-      selectTime: 'Sélectionner l\'Heure',
-      notes: 'Notes Supplémentaires (Optionnel)',
-      notesPlaceholder: 'Exigences spéciales ou instructions...',
-      infoText: 'Votre demande de réservation sera envoyée au prestataire de services. Ils confirmeront le rendez-vous dans les 24 heures.',
-      cancel: 'Annuler',
-      confirm: 'Confirmer la Réservation',
-      errorTitle: 'Erreur',
-      errorMessage: 'Veuillez sélectionner une date et une heure pour votre réservation.',
-      successTitle: 'Réservation Demandée',
-      successMessage: 'Votre demande de réservation a été envoyée. Le prestataire confirmera sous peu.',
-    },
     // Tab Bar
     tabs: {
       home: 'Accueil',
@@ -725,6 +692,10 @@ const translations = {
       searchResults: 'Résultats de recherche',
       seeAll: 'Voir tout',
       noResults: 'Aucun service trouvé pour "{{query}}"',
+      noServicesYet: 'Aucun service disponible pour le moment',
+      tryDifferentSearch: 'Essayez un autre terme de recherche',
+      beFirstToOffer: 'Soyez le premier à offrir un service à la communauté',
+      addService: 'Ajouter un Service',
       services: 'services',
     },
     // Search Screen
@@ -808,18 +779,18 @@ const translations = {
     },
     // Booking Modal
     booking: {
-      title: 'Book Service',
-      selectDate: 'Select Date',
-      selectTime: 'Select Time',
-      notes: 'Additional Notes (Optional)',
-      notesPlaceholder: 'Any special requirements or instructions...',
-      infoText: 'Your booking request will be sent to the service provider. They will confirm the appointment within 24 hours.',
-      cancel: 'Cancel',
-      confirm: 'Confirm Booking',
-      errorTitle: 'Error',
-      errorMessage: 'Please select a date and time for your booking.',
-      successTitle: 'Booking Requested',
-      successMessage: 'Your booking request has been sent. The provider will confirm shortly.',
+      title: 'Réserver le Service',
+      selectDate: 'Sélectionner la Date',
+      selectTime: 'Sélectionner l\'Heure',
+      notes: 'Notes Supplémentaires (Optionnel)',
+      notesPlaceholder: 'Exigences spéciales ou instructions...',
+      infoText: 'Votre demande de réservation sera envoyée au prestataire de services. Ils confirmeront le rendez-vous dans les 24 heures.',
+      cancel: 'Annuler',
+      confirm: 'Confirmer la Réservation',
+      errorTitle: 'Erreur',
+      errorMessage: 'Veuillez sélectionner une date et une heure pour votre réservation.',
+      successTitle: 'Réservation Demandée',
+      successMessage: 'Votre demande de réservation a été envoyée. Le prestataire confirmera sous peu.',
     },
     // Bookings Screen
     bookings: {
@@ -922,21 +893,6 @@ const translations = {
     },
   },
   it: {
-    // Booking Modal
-    booking: {
-      title: 'Prenota Servizio',
-      selectDate: 'Seleziona Data',
-      selectTime: 'Seleziona Orario',
-      notes: 'Note Aggiuntive (Opzionale)',
-      notesPlaceholder: 'Requisiti speciali o istruzioni...',
-      infoText: 'La tua richiesta di prenotazione sarà inviata al fornitore di servizi. Confermeranno l\'appuntamento entro 24 ore.',
-      cancel: 'Annulla',
-      confirm: 'Conferma Prenotazione',
-      errorTitle: 'Errore',
-      errorMessage: 'Si prega di selezionare una data e un orario per la prenotazione.',
-      successTitle: 'Prenotazione Richiesta',
-      successMessage: 'La tua richiesta di prenotazione è stata inviata. Il fornitore confermerà a breve.',
-    },
     // Tab Bar
     tabs: {
       home: 'Home',
@@ -958,6 +914,10 @@ const translations = {
       searchResults: 'Risultati della ricerca',
       seeAll: 'Vedi tutto',
       noResults: 'Nessun servizio trovato per "{{query}}"',
+      noServicesYet: 'Nessun servizio disponibile ancora',
+      tryDifferentSearch: 'Prova un termine di ricerca diverso',
+      beFirstToOffer: 'Sii il primo a offrire un servizio alla comunità',
+      addService: 'Aggiungi Servizio',
       services: 'servizi',
     },
     // Search Screen
@@ -1041,18 +1001,18 @@ const translations = {
     },
     // Booking Modal
     booking: {
-      title: 'Book Service',
-      selectDate: 'Select Date',
-      selectTime: 'Select Time',
-      notes: 'Additional Notes (Optional)',
-      notesPlaceholder: 'Any special requirements or instructions...',
-      infoText: 'Your booking request will be sent to the service provider. They will confirm the appointment within 24 hours.',
-      cancel: 'Cancel',
-      confirm: 'Confirm Booking',
-      errorTitle: 'Error',
-      errorMessage: 'Please select a date and time for your booking.',
-      successTitle: 'Booking Requested',
-      successMessage: 'Your booking request has been sent. The provider will confirm shortly.',
+      title: 'Prenota Servizio',
+      selectDate: 'Seleziona Data',
+      selectTime: 'Seleziona Orario',
+      notes: 'Note Aggiuntive (Opzionale)',
+      notesPlaceholder: 'Requisiti speciali o istruzioni...',
+      infoText: 'La tua richiesta di prenotazione sarà inviata al fornitore di servizi. Confermeranno l\'appuntamento entro 24 ore.',
+      cancel: 'Annulla',
+      confirm: 'Conferma Prenotazione',
+      errorTitle: 'Errore',
+      errorMessage: 'Si prega di selezionare una data e un orario per la prenotazione.',
+      successTitle: 'Prenotazione Richiesta',
+      successMessage: 'La tua richiesta di prenotazione è stata inviata. Il fornitore confermerà a breve.',
     },
     // Bookings Screen
     bookings: {
