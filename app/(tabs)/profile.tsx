@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconSymbol } from '@/components/IconSymbol';
 import { colors } from '@/styles/commonStyles';
 import { currentUser } from '@/data/mockData';
+import { i18n } from '@/locales/translations';
 
 export default function ProfileScreen() {
   const daysUntilExpiry = currentUser.premiumExpiryDate
@@ -48,37 +49,37 @@ export default function ProfileScreen() {
                 size={16}
                 color={colors.highlight}
               />
-              <Text style={styles.premiumText}>Membro Premium</Text>
+              <Text style={styles.premiumText}>{i18n.t('profile.premiumMember')}</Text>
             </View>
           )}
 
           <View style={styles.statsRow}>
             <View style={styles.stat}>
               <Text style={styles.statValue}>{currentUser.rating.toFixed(1)}</Text>
-              <Text style={styles.statLabel}>Avaliação</Text>
+              <Text style={styles.statLabel}>{i18n.t('profile.rating')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.stat}>
               <Text style={styles.statValue}>{currentUser.reviewCount}</Text>
-              <Text style={styles.statLabel}>Avaliações</Text>
+              <Text style={styles.statLabel}>{i18n.t('profile.reviews')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.stat}>
               <Text style={styles.statValue}>{currentUser.servicesOffered.length}</Text>
-              <Text style={styles.statLabel}>Serviços</Text>
+              <Text style={styles.statLabel}>{i18n.t('profile.services')}</Text>
             </View>
           </View>
         </View>
 
         {currentUser.bio && (
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Sobre</Text>
+            <Text style={styles.cardTitle}>{i18n.t('profile.about')}</Text>
             <Text style={styles.bioText}>{currentUser.bio}</Text>
           </View>
         )}
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Informações de Contato</Text>
+          <Text style={styles.cardTitle}>{i18n.t('profile.contactInfo')}</Text>
           <View style={styles.infoRow}>
             <IconSymbol
               ios_icon_name="phone.fill"
@@ -101,7 +102,7 @@ export default function ProfileScreen() {
 
         {currentUser.skills.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Habilidades</Text>
+            <Text style={styles.cardTitle}>{i18n.t('profile.skills')}</Text>
             <View style={styles.skillsContainer}>
               {currentUser.skills.map((skill, index) => (
                 <View key={index} style={styles.skillBadge}>
@@ -122,9 +123,9 @@ export default function ProfileScreen() {
                 color={colors.highlight}
               />
               <View style={styles.premiumInfo}>
-                <Text style={styles.cardTitle}>Assinatura Premium</Text>
+                <Text style={styles.cardTitle}>{i18n.t('profile.premiumSubscription')}</Text>
                 <Text style={styles.premiumExpiry}>
-                  Expira em {daysUntilExpiry} dias
+                  {i18n.t('profile.expiresIn', { days: daysUntilExpiry })}
                 </Text>
               </View>
             </View>
@@ -136,7 +137,7 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Maior visibilidade nos resultados</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit1')}</Text>
               </View>
               <View style={styles.benefitRow}>
                 <IconSymbol
@@ -145,7 +146,7 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Destaque com badge premium</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit2')}</Text>
               </View>
               <View style={styles.benefitRow}>
                 <IconSymbol
@@ -154,11 +155,11 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Análises detalhadas</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit3')}</Text>
               </View>
             </View>
             <TouchableOpacity style={styles.renewButton}>
-              <Text style={styles.renewButtonText}>Renovar Assinatura</Text>
+              <Text style={styles.renewButtonText}>{i18n.t('profile.renewSubscription')}</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -170,9 +171,9 @@ export default function ProfileScreen() {
                 size={48}
                 color={colors.highlight}
               />
-              <Text style={styles.upgradeTitle}>Torne-se Premium</Text>
+              <Text style={styles.upgradeTitle}>{i18n.t('profile.becomePremium')}</Text>
               <Text style={styles.upgradeSubtitle}>
-                Aumente sua visibilidade e consiga mais clientes
+                {i18n.t('profile.premiumSubtitle')}
               </Text>
             </View>
 
@@ -184,7 +185,7 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Maior visibilidade nos resultados</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit1')}</Text>
               </View>
               <View style={styles.benefitRow}>
                 <IconSymbol
@@ -193,7 +194,7 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Destaque com badge premium</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit2')}</Text>
               </View>
               <View style={styles.benefitRow}>
                 <IconSymbol
@@ -202,7 +203,7 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Análises detalhadas</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit3')}</Text>
               </View>
               <View style={styles.benefitRow}>
                 <IconSymbol
@@ -211,17 +212,17 @@ export default function ProfileScreen() {
                   size={20}
                   color={colors.success}
                 />
-                <Text style={styles.benefitText}>Suporte prioritário</Text>
+                <Text style={styles.benefitText}>{i18n.t('profile.benefit4')}</Text>
               </View>
             </View>
 
             <View style={styles.priceContainer}>
               <Text style={styles.priceAmount}>49 CHF</Text>
-              <Text style={styles.pricePeriod}>/ ano</Text>
+              <Text style={styles.pricePeriod}>{i18n.t('profile.pricePerYear')}</Text>
             </View>
 
             <TouchableOpacity style={styles.upgradeButton}>
-              <Text style={styles.upgradeButtonText}>Assinar Agora</Text>
+              <Text style={styles.upgradeButtonText}>{i18n.t('profile.subscribeNow')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -235,7 +236,7 @@ export default function ProfileScreen() {
                 size={24}
                 color={colors.primary}
               />
-              <Text style={styles.menuItemText}>Meus Serviços</Text>
+              <Text style={styles.menuItemText}>{i18n.t('profile.myServices')}</Text>
             </View>
             <IconSymbol
               ios_icon_name="chevron.right"
@@ -253,7 +254,7 @@ export default function ProfileScreen() {
                 size={24}
                 color={colors.primary}
               />
-              <Text style={styles.menuItemText}>Avaliações</Text>
+              <Text style={styles.menuItemText}>{i18n.t('profile.myReviews')}</Text>
             </View>
             <IconSymbol
               ios_icon_name="chevron.right"
@@ -271,7 +272,7 @@ export default function ProfileScreen() {
                 size={24}
                 color={colors.primary}
               />
-              <Text style={styles.menuItemText}>Configurações</Text>
+              <Text style={styles.menuItemText}>{i18n.t('profile.settings')}</Text>
             </View>
             <IconSymbol
               ios_icon_name="chevron.right"
@@ -289,7 +290,7 @@ export default function ProfileScreen() {
                 size={24}
                 color={colors.primary}
               />
-              <Text style={styles.menuItemText}>Ajuda & Suporte</Text>
+              <Text style={styles.menuItemText}>{i18n.t('profile.helpSupport')}</Text>
             </View>
             <IconSymbol
               ios_icon_name="chevron.right"

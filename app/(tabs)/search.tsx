@@ -1,17 +1,24 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from '@/components/SearchBar';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ServiceCard } from '@/components/ServiceCard';
 import { colors } from '@/styles/commonStyles';
-import { serviceCategories, mockServices } from '@/data/mockData';
+import { getServiceCategories, mockServices } from '@/data/mockData';
 import { IconSymbol } from '@/components/IconSymbol';
+import { i18n } from '@/locales/translations';
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [categories, setCategories] = useState(getServiceCategories());
+
+  // Update categories when language changes
+  useEffect(() => {
+    setCategories(getServiceCategories());
+  }, []);
 
   const filteredServices = mockServices.filter(service => {
     const matchesSearch = searchQuery === '' ||
@@ -34,11 +41,11 @@ export default function SearchScreen() {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Explorar Serviços</Text>
+          <Text style={styles.title}>{i18n.t('search.title')}</Text>
           <SearchBar
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Buscar serviços..."
+            placeholder={i18n.t('search.searchPlaceholder')}
           />
         </View>
 
@@ -48,9 +55,9 @@ export default function SearchScreen() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Todas as Categorias</Text>
+            <Text style={styles.sectionTitle}>{i18n.t('search.allCategories')}</Text>
             <View style={styles.categoriesGrid}>
-              {serviceCategories.map((category, index) => (
+              {categories.map((category, index) => (
                 <TouchableOpacity
                   key={index}
                   style={[
@@ -93,10 +100,10 @@ export default function SearchScreen() {
           <View style={styles.section}>
             <View style={styles.resultsHeader}>
               <Text style={styles.sectionTitle}>
-                {selectedCategory || searchQuery ? 'Resultados' : 'Todos os Serviços'}
+                {selectedCategory || searchQuery ? i18n.t('search.results') : i18n.t('search.allServices')}
               </Text>
               <Text style={styles.resultsCount}>
-                {sortedServices.length} {sortedServices.length === 1 ? 'serviço' : 'serviços'}
+                {sortedServices.length} {sortedServices.length === 1 ? i18n.t('search.service') : i18n.t('search.services')}
               </Text>
             </View>
 
@@ -117,9 +124,9 @@ export default function SearchScreen() {
                   size={64}
                   color={colors.textSecondary}
                 />
-                <Text style={styles.emptyText}>Nenhum serviço encontrado</Text>
+                <Text style={styles.emptyText}>{i18n.t('search.noResults')}</Text>
                 <Text style={styles.emptySubtext}>
-                  Tente ajustar seus filtros ou busca
+                  {i18n.t('search.noResultsSubtext')}
                 </Text>
               </View>
             )}

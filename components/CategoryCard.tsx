@@ -5,6 +5,7 @@ import { IconSymbol } from './IconSymbol';
 import { colors } from '@/styles/commonStyles';
 import { ServiceCategory } from '@/types/service';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { i18n } from '@/locales/translations';
 
 interface CategoryCardProps {
   category: ServiceCategory;
@@ -25,7 +26,7 @@ export function CategoryCard({ category, onPress }: CategoryCardProps) {
       <Text style={styles.name} numberOfLines={1}>
         {category.name}
       </Text>
-      <Text style={styles.count}>{category.count} serviços</Text>
+      <Text style={styles.count}>{category.count} {i18n.t('home.services')}</Text>
     </TouchableOpacity>
   );
 }

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Logo } from '@/components/Logo';
@@ -7,12 +7,19 @@ import { SearchBar } from '@/components/SearchBar';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ServiceCard } from '@/components/ServiceCard';
 import { colors } from '@/styles/commonStyles';
-import { serviceCategories, mockServices } from '@/data/mockData';
+import { getServiceCategories, mockServices } from '@/data/mockData';
 import { useRouter } from 'expo-router';
+import { i18n } from '@/locales/translations';
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [categories, setCategories] = useState(getServiceCategories());
   const router = useRouter();
+
+  // Update categories when language changes
+  useEffect(() => {
+    setCategories(getServiceCategories());
+  }, []);
 
   const filteredServices = mockServices.filter(service =>
     service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -36,24 +43,24 @@ export default function HomeScreen() {
       >
         <View style={styles.header}>
           <Logo size="medium" showText={true} />
-          <Text style={styles.tagline}>Encontre profissionais verificados</Text>
+          <Text style={styles.tagline}>{i18n.t('home.tagline')}</Text>
         </View>
 
         <SearchBar
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholder="Buscar serviços..."
+          placeholder={i18n.t('home.searchPlaceholder')}
           onFilterPress={() => console.log('Filter pressed')}
         />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Categorias</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('home.categories')}</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoriesContainer}
           >
-            {serviceCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <React.Fragment key={index}>
                 <CategoryCard
                   category={category}
@@ -70,11 +77,11 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>
-              {searchQuery ? 'Resultados da Busca' : 'Serviços em Destaque'}
+              {searchQuery ? i18n.t('home.searchResults') : i18n.t('home.featuredServices')}
             </Text>
             {!searchQuery && (
               <TouchableOpacity>
-                <Text style={styles.seeAll}>Ver todos</Text>
+                <Text style={styles.seeAll}>{i18n.t('home.seeAll')}</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -91,7 +98,7 @@ export default function HomeScreen() {
           ) : (
             <View style={styles.emptyState}>
               <Text style={styles.emptyText}>
-                Nenhum serviço encontrado para &quot;{searchQuery}&quot;
+                {i18n.t('home.noResults', { query: searchQuery })}
               </Text>
             </View>
           )}

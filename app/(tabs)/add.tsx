@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconSymbol } from '@/components/IconSymbol';
 import { colors } from '@/styles/commonStyles';
-import { serviceCategories } from '@/data/mockData';
+import { getServiceCategories } from '@/data/mockData';
+import { i18n } from '@/locales/translations';
 
 export default function AddServiceScreen() {
   const [title, setTitle] = useState('');
@@ -14,20 +15,26 @@ export default function AddServiceScreen() {
   const [location, setLocation] = useState('');
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [customCategory, setCustomCategory] = useState('');
+  const [categories, setCategories] = useState(getServiceCategories());
+
+  // Update categories when language changes
+  useEffect(() => {
+    setCategories(getServiceCategories());
+  }, []);
 
   const handleSubmit = () => {
     if (!title || !description || !category || !price || !location) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      Alert.alert(i18n.t('addService.errorTitle'), i18n.t('addService.errorMessage'));
       return;
     }
 
     console.log('Service submitted:', { title, description, category, price, location });
     Alert.alert(
-      'Sucesso!',
-      'Seu serviço foi cadastrado com sucesso e está aguardando aprovação.',
+      i18n.t('addService.successTitle'),
+      i18n.t('addService.successMessage'),
       [
         {
-          text: 'OK',
+          text: i18n.t('addService.ok'),
           onPress: () => {
             setTitle('');
             setDescription('');
@@ -54,35 +61,35 @@ export default function AddServiceScreen() {
             size={48}
             color={colors.primary}
           />
-          <Text style={styles.title}>Oferecer Serviço</Text>
+          <Text style={styles.title}>{i18n.t('addService.title')}</Text>
           <Text style={styles.subtitle}>
-            Cadastre seu serviço e comece a receber solicitações
+            {i18n.t('addService.subtitle')}
           </Text>
         </View>
 
         <View style={styles.form}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>
-              Título do Serviço <Text style={styles.required}>*</Text>
+              {i18n.t('addService.serviceTitle')} <Text style={styles.required}>{i18n.t('addService.required')}</Text>
             </Text>
             <TextInput
               style={styles.input}
               value={title}
               onChangeText={setTitle}
-              placeholder="Ex: Limpeza Residencial Completa"
+              placeholder={i18n.t('addService.serviceTitlePlaceholder')}
               placeholderTextColor={colors.textSecondary}
             />
           </View>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>
-              Descrição <Text style={styles.required}>*</Text>
+              {i18n.t('addService.description')} <Text style={styles.required}>{i18n.t('addService.required')}</Text>
             </Text>
             <TextInput
               style={[styles.input, styles.textArea]}
               value={description}
               onChangeText={setDescription}
-              placeholder="Descreva seu serviço em detalhes..."
+              placeholder={i18n.t('addService.descriptionPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               multiline
               numberOfLines={4}
@@ -92,14 +99,14 @@ export default function AddServiceScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>
-              Categoria <Text style={styles.required}>*</Text>
+              {i18n.t('addService.category')} <Text style={styles.required}>{i18n.t('addService.required')}</Text>
             </Text>
             <TouchableOpacity
               style={styles.pickerButton}
               onPress={() => setShowCategoryPicker(!showCategoryPicker)}
             >
               <Text style={[styles.pickerText, !category && styles.pickerPlaceholder]}>
-                {category || 'Selecione uma categoria'}
+                {category || i18n.t('addService.categoryPlaceholder')}
               </Text>
               <IconSymbol
                 ios_icon_name="chevron.down"
@@ -111,7 +118,7 @@ export default function AddServiceScreen() {
 
             {showCategoryPicker && (
               <View style={styles.categoryList}>
-                {serviceCategories.map((cat, index) => (
+                {categories.map((cat, index) => (
                   <TouchableOpacity
                     key={index}
                     style={styles.categoryItem}
@@ -138,12 +145,12 @@ export default function AddServiceScreen() {
                   </TouchableOpacity>
                 ))}
                 <View style={styles.customCategorySection}>
-                  <Text style={styles.customCategoryLabel}>Categoria não encontrada?</Text>
+                  <Text style={styles.customCategoryLabel}>{i18n.t('addService.categoryNotFound')}</Text>
                   <TextInput
                     style={styles.input}
                     value={customCategory}
                     onChangeText={setCustomCategory}
-                    placeholder="Digite uma nova categoria"
+                    placeholder={i18n.t('addService.newCategoryPlaceholder')}
                     placeholderTextColor={colors.textSecondary}
                   />
                   <TouchableOpacity
@@ -156,7 +163,7 @@ export default function AddServiceScreen() {
                       }
                     }}
                   >
-                    <Text style={styles.addCategoryButtonText}>Adicionar Categoria</Text>
+                    <Text style={styles.addCategoryButtonText}>{i18n.t('addService.addCategory')}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -165,7 +172,7 @@ export default function AddServiceScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>
-              Preço (CHF) <Text style={styles.required}>*</Text>
+              {i18n.t('addService.price')} <Text style={styles.required}>{i18n.t('addService.required')}</Text>
             </Text>
             <View style={styles.priceInput}>
               <Text style={styles.currencySymbol}>CHF</Text>
@@ -173,7 +180,7 @@ export default function AddServiceScreen() {
                 style={[styles.input, styles.priceInputField]}
                 value={price}
                 onChangeText={setPrice}
-                placeholder="0.00"
+                placeholder={i18n.t('addService.pricePlaceholder')}
                 placeholderTextColor={colors.textSecondary}
                 keyboardType="decimal-pad"
               />
@@ -182,13 +189,13 @@ export default function AddServiceScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>
-              Localização <Text style={styles.required}>*</Text>
+              {i18n.t('addService.location')} <Text style={styles.required}>{i18n.t('addService.required')}</Text>
             </Text>
             <TextInput
               style={styles.input}
               value={location}
               onChangeText={setLocation}
-              placeholder="Ex: Zurique, Suíça"
+              placeholder={i18n.t('addService.locationPlaceholder')}
               placeholderTextColor={colors.textSecondary}
             />
           </View>
@@ -201,13 +208,12 @@ export default function AddServiceScreen() {
               color={colors.primary}
             />
             <Text style={styles.infoText}>
-              Seu serviço será revisado pela nossa equipe antes de ser publicado. 
-              Isso geralmente leva até 24 horas.
+              {i18n.t('addService.infoText')}
             </Text>
           </View>
 
           <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Cadastrar Serviço</Text>
+            <Text style={styles.submitButtonText}>{i18n.t('addService.submit')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
