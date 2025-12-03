@@ -1,44 +1,304 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Platform } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { IconSymbol } from "@/components/IconSymbol";
-import { GlassView } from "expo-glass-effect";
-import { useTheme } from "@react-navigation/native";
+
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { IconSymbol } from '@/components/IconSymbol';
+import { colors } from '@/styles/commonStyles';
+import { currentUser } from '@/data/mockData';
 
 export default function ProfileScreen() {
-  const theme = useTheme();
+  const daysUntilExpiry = currentUser.premiumExpiryDate
+    ? Math.ceil((new Date(currentUser.premiumExpiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    : 0;
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background }]} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={[
-          styles.contentContainer,
-          Platform.OS !== 'ios' && styles.contentContainerWithTabBar
-        ]}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
       >
-        <GlassView style={[
-          styles.profileHeader,
-          Platform.OS !== 'ios' && { backgroundColor: theme.dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
-        ]} glassEffectStyle="regular">
-          <IconSymbol ios_icon_name="person.circle.fill" android_material_icon_name="person" size={80} color={theme.colors.primary} />
-          <Text style={[styles.name, { color: theme.colors.text }]}>John Doe</Text>
-          <Text style={[styles.email, { color: theme.dark ? '#98989D' : '#666' }]}>john.doe@example.com</Text>
-        </GlassView>
+        <View style={styles.profileHeader}>
+          <View style={styles.avatarContainer}>
+            <IconSymbol
+              ios_icon_name="person.circle.fill"
+              android_material_icon_name="account-circle"
+              size={80}
+              color={colors.primary}
+            />
+            {currentUser.verified && (
+              <View style={styles.verifiedBadge}>
+                <IconSymbol
+                  ios_icon_name="checkmark.seal.fill"
+                  android_material_icon_name="verified"
+                  size={24}
+                  color={colors.success}
+                />
+              </View>
+            )}
+          </View>
+          <Text style={styles.name}>{currentUser.name}</Text>
+          <Text style={styles.email}>{currentUser.email}</Text>
 
-        <GlassView style={[
-          styles.section,
-          Platform.OS !== 'ios' && { backgroundColor: theme.dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
-        ]} glassEffectStyle="regular">
+          {currentUser.premium && (
+            <View style={styles.premiumBadge}>
+              <IconSymbol
+                ios_icon_name="star.fill"
+                android_material_icon_name="star"
+                size={16}
+                color={colors.highlight}
+              />
+              <Text style={styles.premiumText}>Membro Premium</Text>
+            </View>
+          )}
+
+          <View style={styles.statsRow}>
+            <View style={styles.stat}>
+              <Text style={styles.statValue}>{currentUser.rating.toFixed(1)}</Text>
+              <Text style={styles.statLabel}>Avaliação</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.stat}>
+              <Text style={styles.statValue}>{currentUser.reviewCount}</Text>
+              <Text style={styles.statLabel}>Avaliações</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.stat}>
+              <Text style={styles.statValue}>{currentUser.servicesOffered.length}</Text>
+              <Text style={styles.statLabel}>Serviços</Text>
+            </View>
+          </View>
+        </View>
+
+        {currentUser.bio && (
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Sobre</Text>
+            <Text style={styles.bioText}>{currentUser.bio}</Text>
+          </View>
+        )}
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Informações de Contato</Text>
           <View style={styles.infoRow}>
-            <IconSymbol ios_icon_name="phone.fill" android_material_icon_name="phone" size={20} color={theme.dark ? '#98989D' : '#666'} />
-            <Text style={[styles.infoText, { color: theme.colors.text }]}>+1 (555) 123-4567</Text>
+            <IconSymbol
+              ios_icon_name="phone.fill"
+              android_material_icon_name="phone"
+              size={20}
+              color={colors.primary}
+            />
+            <Text style={styles.infoText}>{currentUser.phone}</Text>
           </View>
           <View style={styles.infoRow}>
-            <IconSymbol ios_icon_name="location.fill" android_material_icon_name="location-on" size={20} color={theme.dark ? '#98989D' : '#666'} />
-            <Text style={[styles.infoText, { color: theme.colors.text }]}>San Francisco, CA</Text>
+            <IconSymbol
+              ios_icon_name="location.fill"
+              android_material_icon_name="location-on"
+              size={20}
+              color={colors.primary}
+            />
+            <Text style={styles.infoText}>{currentUser.location}</Text>
           </View>
-        </GlassView>
+        </View>
+
+        {currentUser.skills.length > 0 && (
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Habilidades</Text>
+            <View style={styles.skillsContainer}>
+              {currentUser.skills.map((skill, index) => (
+                <View key={index} style={styles.skillBadge}>
+                  <Text style={styles.skillText}>{skill}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {currentUser.premium ? (
+          <View style={styles.card}>
+            <View style={styles.premiumHeader}>
+              <IconSymbol
+                ios_icon_name="star.circle.fill"
+                android_material_icon_name="stars"
+                size={32}
+                color={colors.highlight}
+              />
+              <View style={styles.premiumInfo}>
+                <Text style={styles.cardTitle}>Assinatura Premium</Text>
+                <Text style={styles.premiumExpiry}>
+                  Expira em {daysUntilExpiry} dias
+                </Text>
+              </View>
+            </View>
+            <View style={styles.premiumBenefits}>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Maior visibilidade nos resultados</Text>
+              </View>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Destaque com badge premium</Text>
+              </View>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Análises detalhadas</Text>
+              </View>
+            </View>
+            <TouchableOpacity style={styles.renewButton}>
+              <Text style={styles.renewButtonText}>Renovar Assinatura</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.card}>
+            <View style={styles.upgradeHeader}>
+              <IconSymbol
+                ios_icon_name="star.circle"
+                android_material_icon_name="stars"
+                size={48}
+                color={colors.highlight}
+              />
+              <Text style={styles.upgradeTitle}>Torne-se Premium</Text>
+              <Text style={styles.upgradeSubtitle}>
+                Aumente sua visibilidade e consiga mais clientes
+              </Text>
+            </View>
+
+            <View style={styles.premiumBenefits}>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Maior visibilidade nos resultados</Text>
+              </View>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Destaque com badge premium</Text>
+              </View>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Análises detalhadas</Text>
+              </View>
+              <View style={styles.benefitRow}>
+                <IconSymbol
+                  ios_icon_name="checkmark.circle.fill"
+                  android_material_icon_name="check-circle"
+                  size={20}
+                  color={colors.success}
+                />
+                <Text style={styles.benefitText}>Suporte prioritário</Text>
+              </View>
+            </View>
+
+            <View style={styles.priceContainer}>
+              <Text style={styles.priceAmount}>49 CHF</Text>
+              <Text style={styles.pricePeriod}>/ ano</Text>
+            </View>
+
+            <TouchableOpacity style={styles.upgradeButton}>
+              <Text style={styles.upgradeButtonText}>Assinar Agora</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <View style={styles.menuSection}>
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemLeft}>
+              <IconSymbol
+                ios_icon_name="briefcase.fill"
+                android_material_icon_name="work"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuItemText}>Meus Serviços</Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemLeft}>
+              <IconSymbol
+                ios_icon_name="star.fill"
+                android_material_icon_name="star"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuItemText}>Avaliações</Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemLeft}>
+              <IconSymbol
+                ios_icon_name="gearshape.fill"
+                android_material_icon_name="settings"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuItemText}>Configurações</Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemLeft}>
+              <IconSymbol
+                ios_icon_name="questionmark.circle.fill"
+                android_material_icon_name="help"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuItemText}>Ajuda & Suporte</Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -47,45 +307,234 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    // backgroundColor handled dynamically
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
   },
   contentContainer: {
-    padding: 20,
-  },
-  contentContainerWithTabBar: {
-    paddingBottom: 100, // Extra padding for floating tab bar
+    paddingTop: Platform.OS === 'android' ? 48 : 20,
+    paddingHorizontal: 16,
+    paddingBottom: 100,
   },
   profileHeader: {
     alignItems: 'center',
-    borderRadius: 12,
-    padding: 32,
+    marginBottom: 24,
+  },
+  avatarContainer: {
+    position: 'relative',
     marginBottom: 16,
-    gap: 12,
+  },
+  verifiedBadge: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: colors.card,
+    borderRadius: 12,
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
-    // color handled dynamically
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 4,
   },
   email: {
-    fontSize: 16,
-    // color handled dynamically
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: 12,
   },
-  section: {
+  premiumBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: `${colors.highlight}20`,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  premiumText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.card,
     borderRadius: 12,
-    padding: 20,
-    gap: 12,
+    padding: 16,
+    width: '100%',
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
+    elevation: 3,
+  },
+  stat: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  statDivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: colors.border,
+  },
+  statValue: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.primary,
+    marginBottom: 4,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+  },
+  card: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 12,
+  },
+  bioText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 20,
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    marginBottom: 12,
   },
   infoText: {
+    fontSize: 14,
+    color: colors.text,
+  },
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  skillBadge: {
+    backgroundColor: `${colors.primary}15`,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+  },
+  skillText: {
+    fontSize: 14,
+    color: colors.primary,
+    fontWeight: '500',
+  },
+  premiumHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 16,
+  },
+  premiumInfo: {
+    flex: 1,
+  },
+  premiumExpiry: {
+    fontSize: 14,
+    color: colors.textSecondary,
+  },
+  premiumBenefits: {
+    gap: 12,
+    marginBottom: 16,
+  },
+  benefitRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  benefitText: {
+    fontSize: 14,
+    color: colors.text,
+  },
+  renewButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  renewButtonText: {
     fontSize: 16,
-    // color handled dynamically
+    fontWeight: '600',
+    color: colors.card,
+  },
+  upgradeHeader: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  upgradeTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.text,
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  upgradeSubtitle: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  priceAmount: {
+    fontSize: 36,
+    fontWeight: '700',
+    color: colors.primary,
+  },
+  pricePeriod: {
+    fontSize: 18,
+    color: colors.textSecondary,
+    marginLeft: 4,
+  },
+  upgradeButton: {
+    backgroundColor: colors.secondary,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  upgradeButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.card,
+  },
+  menuSection: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 16,
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
+    elevation: 3,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  menuItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  menuItemText: {
+    fontSize: 16,
+    color: colors.text,
   },
 });
